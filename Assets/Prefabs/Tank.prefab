@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6773990002696195460}
   - component: {fileID: 6631116649110641210}
   - component: {fileID: 4667776363511205230}
+  - component: {fileID: 6287454931578742150}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Player
@@ -67,6 +68,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootingController
   bullet: {fileID: 3033492025394671499, guid: 78927dfb71c0ab74181f72358462f80b, type: 3}
+--- !u!114 &6287454931578742150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380727085780119258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f91b0c45a942f4a87d72db949f4e0d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::TankHeadlight
+  headlight: {fileID: 0}
+  lightColor: {r: 1, g: 0.86, b: 0.48, a: 1}
+  normalRange: 6
+  expandedRange: 8.5
+  innerAngle: 24
+  outerAngle: 54
+  intensity: 1.35
+  rangeChangeSpeed: 10
+  expandActionName: Sprint
+  expandKey: 51
 --- !u!50 &1167637545557912452
 Rigidbody2D:
   serializedVersion: 5
