@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class MovementController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float thrustForce = 10f;
+    [SerializeField] private float moveForce = 10f;
     [SerializeField] private float maxSpeed = 8f;
 
     [Header("Rotation")]
@@ -44,15 +44,7 @@ public class MovementController : MonoBehaviour
 
     void MoveTank()
     {
-        float thrustInput = inputDir.y;
-
-        // USE RIGHT if sprite faces right
-        Vector2 force =
-            (Vector2)transform.right *
-            thrustInput *
-            thrustForce;
-
-        rb.AddForce(force, ForceMode2D.Force);
+        rb.AddForce(inputDir * moveForce, ForceMode2D.Force);
     }
 
     void ClampVelocity()

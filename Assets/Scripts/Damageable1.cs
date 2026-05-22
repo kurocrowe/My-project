@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Damageable : MonoBehaviour
+public class Damageable1 : MonoBehaviour
 {
     public static int length = 5;
     private static int enemiesKilled;
@@ -9,7 +9,6 @@ public class Damageable : MonoBehaviour
     [SerializeField] private UISliderUpdater sliderUI;
     [SerializeField] private AudioClip sfxDamage;
     [SerializeField] private GameObject vfxDamage;
-    [SerializeField] private string sceneName = "Scene2";
 
     private bool isDead;
 
@@ -56,7 +55,7 @@ public class Damageable : MonoBehaviour
             mgr.AddScore(10);
         }
 
-        Damageable.length--;
+        Damageable1.length--;
         enemiesKilled++;
 
         if (enemiesKilled >= 3)
@@ -65,19 +64,10 @@ public class Damageable : MonoBehaviour
         }
         Debug.Log("Enemies left: " + Damageable.length);
 
-        if (Damageable.length <= 0)
+        if (Damageable1.length <= 0)
         {
             BulletController.ResetToNormalBullet();
-            SceneLoader sceneLoader = FindFirstObjectByType<SceneLoader>();
-
-            if (sceneLoader != null)
-            {
-                sceneLoader.Load(sceneName);
-            }
-            else
-            {
-                Debug.LogError("SceneLoader not found. Add SceneLoader to a GameObject in this scene.");
-            }
+          
         }
 
         Destroy(gameObject);
