@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class EnemyTank : MonoBehaviour
 {
-    public int health = 3;
+
     public float moveSpeed = 2f;
+    public int collisionDamage = 10;
 
     private Transform player;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
     }
 
     void Update()
@@ -30,13 +36,18 @@ public class EnemyTank : MonoBehaviour
         transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
     }
 
-    public void TakeDamage(int damage)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        health -= damage;
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
 
-        if (health <= 0)
+        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+
+        if (playerHealth != null)
         {
-            Destroy(gameObject);
+            playerHealth.TakeDamage(collisionDamage);
         }
     }
+
+  
 }

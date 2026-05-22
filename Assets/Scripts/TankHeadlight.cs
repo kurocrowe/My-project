@@ -6,6 +6,7 @@ public class TankHeadlight : MonoBehaviour
 {
     [Header("Light")]
     [SerializeField] private Light2D headlight;
+    [SerializeField] private Transform turret;
     [SerializeField] private Color lightColor = new Color(1f, 0.86f, 0.48f, 1f);
     [SerializeField] private float normalRange = 6f;
     [SerializeField] private float expandedRange = 8.5f;
@@ -13,6 +14,7 @@ public class TankHeadlight : MonoBehaviour
     [SerializeField] private float outerAngle = 54f;
     [SerializeField] private float intensity = 1.35f;
     [SerializeField] private float rangeChangeSpeed = 10f;
+    [SerializeField] private float rotationOffset = 0f;
 
     [Header("Controls")]
     [SerializeField] private string expandActionName = "Sprint";
@@ -24,6 +26,12 @@ public class TankHeadlight : MonoBehaviour
     private void Awake()
     {
         expandAction = InputSystem.actions?.FindAction(expandActionName, false);
+
+        if (turret == null)
+        {
+            turret = GetComponentInChildren<TankTurret>()?.transform;
+        }
+
         EnsureHeadlight();
         ConfigureHeadlight(normalRange);
     }
@@ -31,6 +39,7 @@ public class TankHeadlight : MonoBehaviour
     private void Update()
     {
         float targetRange = IsExpandPressed() ? expandedRange : normalRange;
+
         headlight.pointLightOuterRadius = Mathf.Lerp(
             headlight.pointLightOuterRadius,
             targetRange,
@@ -38,28 +47,41 @@ public class TankHeadlight : MonoBehaviour
         );
     }
 
+    private void LateUpdate()
+    {
+        if (turret != null)
+        {
+            headlight.transform.rotation = turret.rotation * Quaternion.Euler(0f, 0f, rotationOffset);
+        }
+    }
+
     private void EnsureHeadlight()
     {
-        if (headlight != null)
-        {
-            return;
-        }
+        Transform parent = turret != null ? turret : transform;
 
-        Transform existingHeadlight = transform.Find(HeadlightObjectName);
-        if (existingHeadlight != null)
+        if (headlight == null)
         {
-            headlight = existingHeadlight.GetComponent<Light2D>();
+            Transform existingHeadlight = parent.Find(HeadlightObjectName);
+
+            if (existingHeadlight != null)
+            {
+                headlight = existingHeadlight.GetComponent<Light2D>();
+            }
         }
 
         if (headlight == null)
         {
             var headlightObject = new GameObject(HeadlightObjectName);
-            headlightObject.transform.SetParent(transform, false);
+            headlightObject.transform.SetParent(parent, false);
             headlight = headlightObject.AddComponent<Light2D>();
+        }
+        else
+        {
+            headlight.transform.SetParent(parent, false);
         }
 
         headlight.transform.localPosition = Vector3.zero;
-        headlight.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+        headlight.transform.localRotation = Quaternion.Euler(0f, 0f, rotationOffset);
     }
 
     private void ConfigureHeadlight(float range)

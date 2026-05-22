@@ -8,7 +8,7 @@ public class TankShoot : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletForce = 20f;
-
+    [SerializeField] private GameObject muzzleFlashPrefab;
     void Update()
     {
         Shoot();
@@ -24,11 +24,21 @@ public class TankShoot : MonoBehaviour
                 firePoint.rotation
             );
 
-            Rigidbody2D rb =
-                bullet.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-            rb.linearVelocity =
-                firePoint.up * bulletForce;
+            if (rb != null)
+            {
+                rb.linearVelocity = firePoint.up * bulletForce;
+            }
+
+            if (muzzleFlashPrefab != null)
+            {
+                Instantiate(
+                    muzzleFlashPrefab,
+                    firePoint.position,
+                    firePoint.rotation
+                );
+            }
         }
     }
 }
