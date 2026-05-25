@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 838913593255675336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13, y: -7.19, z: 0}
+  m_LocalPosition: {x: 1.01028, y: 0.01797, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.98742133, g: 0.14653252, b: 0, a: 1}
@@ -185,34 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0b041a28e61204a871de9c5a0c5d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damageable
-  currentHealth: 100
-  OnDamaged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9183537932760809503, guid: 0f16d54a60f93cb41aec14090d5a77e7, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: e59694cf51db35b40b34afac37b2089c, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2378848274722428978}
-        m_TargetAssemblyTypeName: UISliderUpdater, Assembly-CSharp
-        m_MethodName: SetSliderValue
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 100
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  health: 100
+  sliderUI: {fileID: 2378848274722428978}
+  sfxDamage: {fileID: 8300000, guid: 419d18fe67c84e7439470e344459f13c, type: 3}
+  vfxDamage: {fileID: 6042141431891701045, guid: 4d340f2e052fb764e91efd54cc761835, type: 3}
+  sceneName: Scene2
 --- !u!114 &7162640096194055858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,8 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b84bd0d4ef93ce4e8169159c4c919a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  health: 3
   moveSpeed: 2
+  collisionDamage: 10
 --- !u!1 &2939565130936254438
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +264,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8485436940906418401
 MonoBehaviour:
@@ -618,3 +595,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   sliderUi: {fileID: 7625342062847259482}
+  target: {fileID: 5665218207655208681}
+  offset: {x: 0, y: -1.5, z: 0}

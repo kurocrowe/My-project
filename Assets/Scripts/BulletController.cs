@@ -17,6 +17,7 @@ public class BulletController : MonoBehaviour
     [Header("References")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private AudioClip sfxDamage;
 
     private int damage;
 
@@ -69,14 +70,34 @@ public class BulletController : MonoBehaviour
     {
         Debug.Log("Collided with: " + collision.gameObject.name);
 
-        if (collision.TryGetComponent<Damageable>(out Damageable damageable))
+        Damageable damageable = collision.GetComponentInParent<Damageable>();
+        if (damageable != null)
         {
             damageable.TakeDamage(damage);
             Destroy(gameObject);
+            return;
         }
-        else if (collision.TryGetComponent<Damageable1>(out Damageable1 damageable1))
+
+        Damageable1 damageable1 = collision.GetComponentInParent<Damageable1>();
+        if (damageable1 != null)
         {
             damageable1.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        BossHitbox boss = collision.GetComponentInParent<BossHitbox>();
+        if (boss != null)
+        {
+            GameObject hitSfx = GameObject.Find("Sound Effects Player");
+
+            if (hitSfx != null &&
+                sfxDamage != null &&
+                hitSfx.TryGetComponent<AudioSource>(out AudioSource source))
+            {
+                source.PlayOneShot(sfxDamage);
+            }
+            boss.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

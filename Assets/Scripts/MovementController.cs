@@ -21,8 +21,37 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
-        inputDir =
-            InputSystem.actions["Move"].ReadValue<Vector2>();
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            inputDir = InputSystem.actions["Move"].ReadValue<Vector2>();
+            return;
+        }
+
+        float horizontal = 0f;
+        float vertical = 0f;
+
+        if (keyboard[GameSettings.TurnLeftKey].isPressed)
+        {
+            horizontal -= 1f;
+        }
+
+        if (keyboard[GameSettings.TurnRightKey].isPressed)
+        {
+            horizontal += 1f;
+        }
+
+        if (keyboard[GameSettings.MoveUpKey].isPressed)
+        {
+            vertical += 1f;
+        }
+
+        if (keyboard[GameSettings.MoveDownKey].isPressed)
+        {
+            vertical -= 1f;
+        }
+
+        inputDir = new Vector2(horizontal, vertical);
     }
 
     void FixedUpdate()

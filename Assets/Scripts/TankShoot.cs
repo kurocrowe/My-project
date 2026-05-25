@@ -16,7 +16,10 @@ public class TankShoot : MonoBehaviour
 
     void Shoot()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        bool mousePressed = Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame;
+        bool keyPressed = Keyboard.current != null && Keyboard.current[GameSettings.ShootKey].wasPressedThisFrame;
+
+        if (mousePressed || keyPressed)
         {
             GameObject bullet = Instantiate(
                 bulletPrefab,

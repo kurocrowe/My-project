@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Damageable : MonoBehaviour
 {
     public static int length = 5;
@@ -12,6 +12,14 @@ public class Damageable : MonoBehaviour
     [SerializeField] private string sceneName = "Scene2";
 
     private bool isDead;
+
+    private void Start()
+    {
+        if (sliderUI != null)
+        {
+            sliderUI.SetMaxValue(health);
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -35,7 +43,6 @@ public class Damageable : MonoBehaviour
         {
             sliderUI.SetSliderValue(health);
         }
-
         if (health > 0)
         {
             return;
@@ -63,23 +70,16 @@ public class Damageable : MonoBehaviour
         {
             BulletController.UnlockLaser();
         }
+
         Debug.Log("Enemies left: " + Damageable.length);
+
+        Destroy(gameObject);
 
         if (Damageable.length <= 0)
         {
             BulletController.ResetToNormalBullet();
-            SceneLoader sceneLoader = FindFirstObjectByType<SceneLoader>();
 
-            if (sceneLoader != null)
-            {
-                sceneLoader.Load(sceneName);
-            }
-            else
-            {
-                Debug.LogError("SceneLoader not found. Add SceneLoader to a GameObject in this scene.");
-            }
+            SceneManager.LoadScene(sceneName);
         }
-
-        Destroy(gameObject);
     }
 }

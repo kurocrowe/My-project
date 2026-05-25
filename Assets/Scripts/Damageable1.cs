@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Damageable1 : MonoBehaviour
 {
     public static int length = 5;
@@ -9,8 +9,17 @@ public class Damageable1 : MonoBehaviour
     [SerializeField] private UISliderUpdater sliderUI;
     [SerializeField] private AudioClip sfxDamage;
     [SerializeField] private GameObject vfxDamage;
+    [SerializeField] private string sceneName = "Scene3";
 
     private bool isDead;
+
+    private void Start()
+    {
+        if (sliderUI != null)
+        {
+            sliderUI.SetMaxValue(health);
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -62,14 +71,16 @@ public class Damageable1 : MonoBehaviour
         {
             BulletController.UnlockLaser();
         }
-        Debug.Log("Enemies left: " + Damageable.length);
+
+        Debug.Log("Enemies left: " + Damageable1.length);
+
+        Destroy(gameObject);
 
         if (Damageable1.length <= 0)
         {
             BulletController.ResetToNormalBullet();
-          
-        }
 
-        Destroy(gameObject);
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

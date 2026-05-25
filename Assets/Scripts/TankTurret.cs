@@ -30,4 +30,8 @@ public class TankTurret : MonoBehaviour
         transform.rotation =
             Quaternion.Euler(0f, 0f, angle);
     }
+    public void SetCamera(Camera cameraToUse)
+    {
+        mainCamera = cameraToUse;
+    }
 }
