@@ -63,9 +63,10 @@ public class PlayerHealth : MonoBehaviour
     {
         source.PlayOneShot(sfxDamage);
     }
-            
-            Destroy(gameObject);
-}
+
+            DisableTankForGameOver();
+
+        }
     }
     private void ShowGameOverText()
     {
@@ -127,5 +128,44 @@ public class PlayerHealth : MonoBehaviour
         }
 
         shieldCoroutine = null;
+    }
+    private void DisableTankForGameOver()
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer renderer in renderers)
+        {
+            renderer.enabled = false;
+        }
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        MovementController movement = GetComponent<MovementController>();
+        if (movement != null)
+        {
+            movement.enabled = false;
+        }
+
+        TankShoot shoot = GetComponent<TankShoot>();
+        if (shoot != null)
+        {
+            shoot.enabled = false;
+        }
+
+        TankTurret turret = GetComponent<TankTurret>();
+        if (turret != null)
+        {
+            turret.enabled = false;
+        }
     }
 }
