@@ -135,6 +135,8 @@ public class AnimatedMainMenu : MonoBehaviour
         }
 
         SceneManager.LoadScene(playSceneName);
+        Damageable.enemiesKilled = 0;
+        Damageable.length = 5;
     }
 
     private IEnumerator PlayIntro()

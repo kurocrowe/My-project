@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 public class Damageable : MonoBehaviour
 {
     public static int length = 5;
-    private static int enemiesKilled;
+    public static int enemiesKilled;
     public int health = 100;
 
     [SerializeField] private UISliderUpdater sliderUI;
@@ -15,6 +15,7 @@ public class Damageable : MonoBehaviour
 
     private void Start()
     {
+
         if (sliderUI != null)
         {
             sliderUI.SetMaxValue(health);
@@ -80,6 +81,8 @@ public class Damageable : MonoBehaviour
             BulletController.ResetToNormalBullet();
 
             SceneManager.LoadScene(sceneName);
+            Damageable1.length = 5;
+            Damageable1.enemiesKilled = 0;
         }
     }
 }
